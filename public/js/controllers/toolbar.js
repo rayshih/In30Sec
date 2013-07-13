@@ -1,7 +1,9 @@
 var ToolBarController = function ( $el ){
-  this.$el = $el;
+  this.setDOM($el);
   this.widgets = [];
 };
+
+ToolBarController.prototype = new BaseController();
 
 ToolBarController.prototype.render = function(){
   var $el = this.$el;

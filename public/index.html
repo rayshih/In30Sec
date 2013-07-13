@@ -19,16 +19,26 @@
 		<script src="js/view.js" type="text/javascript" charset="utf-8"></script>
 
 		<!-- controllers -->
+		<script src="js/controllers/base.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/controllers/editor.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/controllers/play.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/controllers/toolbar.js" type="text/javascript" charset="utf-8"></script>
 
 		<!-- main -->
 		<script src="js/main.js" type="text/javascript" charset="utf-8"></script>
 	</head>
 	<body>
-		<div id='edit-area'>
+		<div id="edit-area">
+			edit area
 		</div>
-		<div id='toolbar'>
+		<div id='display' style="display: none;">
+			display
+		</div>
+		<div id="toolbar-wrapper">
+			<div id="toolbar"></div>
+			<div id="toolbar-right">
+			    <div id="play-btn" class="toolbar-button">Play</div>
+			</div>
 		</div>
 	</body>
 </html>

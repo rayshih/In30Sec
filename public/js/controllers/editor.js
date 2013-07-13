@@ -1,3 +1,5 @@
 var EditorController = function ( $el ){
-  this.$el = $el;
+  this.setDOM($el);
 };
+
+EditorController.prototype = new BaseController();

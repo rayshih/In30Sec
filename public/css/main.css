@@ -1,10 +1,13 @@
+div {
+	border : 1px solid white;
+}
+
 body {
 	background-color: darkGray;
 	padding : 0;
 }
 
-#edit-area {
-	border : 1px solid white;
+#edit-area, #display {
 	margin : 10px;
 
 	position : absolute;
@@ -14,8 +17,7 @@ body {
 	top : 0;
 }
 
-#toolbar {
-	border : 1px solid white;
+#toolbar-wrapper {
 	margin : 10px;
 
 	position : absolute;
@@ -23,4 +25,33 @@ body {
 	left : 0;
 	right : 0;
 	height : 80px;
+}
+
+#toolbar, #toolbar-right {
+	border : 0;
+	position : absolute;
+	margin : 10px;
+
+	top : 0;
+	bottom : 0;
+
+	vertical-align : middle;
+}
+
+#toolbar-right {
+	right : 0;
+}
+
+.toolbar-button {
+	height : 60px;
+	line-height : 60px;
+	padding : 0 15px;
+	display: inline-block;
+	vertical-align: middle;
+
+	cursor : default;
+}
+
+.toolbar-button:hover {
+	background-color : white;
 }
