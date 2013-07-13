@@ -1,7 +1,7 @@
 var fs = require('fs');
 var express = require('express');
+var consolidate = require('consolidate');
 var request = require('request');
-var jade    = require('jade');
 
 var app = express();
 
@@ -13,18 +13,19 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.cookieParser());
 app.use(express.cookieSession({ secret: 'haaaaa' }));
 
+app.engine('html', consolidate.mustache);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/public');
+
 app.get('/', function (req, res){
-  fs.readFile('./public/home.html', function ( err, view ){
-    var body = view;
-    res.setHeader('Content-Length', body.length);
-    res.end(body);
-  });
+  res.render('home');
 });
 
 app.get('/login', function(req, res){
   var url = 'https://www.linkedin.com/uas/oauth2/authorization' +
   '?response_type=code' +
   '&client_id=' + API_KEY +
+  '&scope=r_fullprofile' +
   '&state=' + CSRF +
   '&redirect_uri=http://localhost:4000/callback';
 
@@ -32,8 +33,6 @@ app.get('/login', function(req, res){
 });
 
 app.get('/callback', function(req, res){
-  console.log(req.query);
-
   var authorization_token = req.query.code;
 
   // TODO check state (CSRF)
@@ -51,16 +50,7 @@ app.get('/callback', function(req, res){
 });
 
 app.get('/profile', function (req, res){
-  var body = req.session.access_token;
-  res.setHeader('Content-Length', body.length);
-  res.end(body);
-
-  return;
-  fs.readFile('./public/profile.html', function ( err, view ){
-    var body = view;
-    res.setHeader('Content-Length', body.length);
-    res.end(body);
-  })
+  res.render( 'profile', { access_token : req.session.access_token });
 });
 
 app.listen(4000);
