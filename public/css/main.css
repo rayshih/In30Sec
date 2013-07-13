@@ -51,10 +51,15 @@ body {
 	height : 60px;
 	line-height : 60px;
 	padding : 0 15px;
+	margin-right : 10px;
 	display: inline-block;
 	vertical-align: middle;
 
 	cursor : default;
+}
+
+#play-btn {
+	margin-right : 0;
 }
 
 .toolbar-button:hover {
