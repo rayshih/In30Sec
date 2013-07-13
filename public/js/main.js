@@ -46,6 +46,7 @@ $(function (){
     WidgetCollection.addWidget(new TimeLine(rect, {hello: 'world'}));
     WidgetCollection.addWidget(new Skills(new Rect(0, 0, 800, 400), {}));
     WidgetCollection.addWidget(new Connections(new Rect(0, 0, 200, 300), {connections: data.timeline.numConnections}));
+    WidgetCollection.addWidget(new ExperienceYear(new Rect(0, 0, 200, 300), {year: data.timeline.experience_year}));
     WidgetCollection.addWidget(new Namecard(new Rect(0, 0, 350, 110), {}));
 
     refreshView();
