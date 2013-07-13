@@ -20,7 +20,6 @@ ToolBarController.prototype.setupDroppable = function (){
 };
 
 ToolBarController.prototype.removeWidgetByName = function(widgetName){
-  console.log('test');
   var widget = WidgetCollection.findWidgetByName(widgetName);
   widget.remove();
   refreshView();

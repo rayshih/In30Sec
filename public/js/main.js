@@ -1,9 +1,13 @@
 $(function (){
+
+  // TODO load data
   var rect = new Rect(200, 200, 300, 200);
   var headline = new HeadLine(rect, {hello: 'world'});
 
   window.WidgetCollection = new WidgetCollection();
   WidgetCollection.addWidget(headline);
+
+  // Setup Controllers
 
   var toolbarController = new ToolBarController($('#toolbar'));
   var editorController = new EditorController($('#edit-area'));

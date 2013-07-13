@@ -60,3 +60,7 @@ body {
 .toolbar-button:hover {
 	background-color : white;
 }
+
+.widget {
+	position : absolute;
+}
