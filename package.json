@@ -2,6 +2,8 @@
 	"name" : "In30Sec",
 	"description" : "In30Sec - LinkedIn 2013 hackday",
 	"dependencies" : {
-		"express" : "3.x"
+		"express" : "3.x",
+		"request" : "2.22.x",
+		"jade"    : "0.33.x"
 	}
 }
