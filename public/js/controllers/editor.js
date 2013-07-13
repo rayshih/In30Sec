@@ -62,15 +62,16 @@ EditorController.prototype.render = function(){
       });
 
       var rect = widget.rect;
+      $view.addClass('border');
       $view.height(rect.h);
       $view.width(rect.w);
       $view.offset(widget.getOffset());
       $view.css({'position' : 'absolute'});
 
+      $el.append($view);
+
       var WidgetVC = View[ title ];
       self.viewControllers[ title ] = new WidgetVC($view, widget);
-
-      $el.append($view);
     });
   });
 }

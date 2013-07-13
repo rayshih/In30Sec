@@ -26,11 +26,10 @@ PlayController.prototype.render = function(){
       $view.width(rect.w);
       $view.offset(widget.getOffset());
 
-      var WidgetVC = View[ title ];
-
-      self.viewControllers[ title ] = new WidgetVC($view, widget);
-
       $el.append($view);
+
+      var WidgetVC = View[ title ];
+      self.viewControllers[ title ] = new WidgetVC($view, widget);
     });
   });
 };

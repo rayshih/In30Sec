@@ -1,10 +1,15 @@
-div {
+.border {
 	border : 1px solid white;
 }
 
 body {
-	background-color: darkGray;
 	padding : 0;
+	font-family: Monospace;
+	background-color: #f0f0f0;
+	background-image: url('/images/bg.jpg');
+	margin: 0px;
+	overflow: hidden;
+	color : white;
 }
 
 #edit-area, #display {
@@ -64,8 +69,41 @@ body {
 
 .toolbar-button:hover {
 	background-color : white;
+	color : gray;
 }
 
 .widget {
 	position : absolute;
 }
+
+.Number{
+	width: 100%;
+	line-height: 250px;
+	vertical-align: middle;
+	font-size: 50pt;
+	text-align: center;
+	color: #99ffff;
+}
+
+.Des{
+	width: 100%;
+	height: 40%;
+	font-size: 20pt;
+	text-align: center;
+	color: #ffffff;
+}
+
+#widget-connections{
+	position: absolute;
+	top: 20%;
+	right:20%;
+	z-index: 12000;
+	background: #fff;
+	border: 1px solid #aaa;
+	box-shadow: 0 0 25px #fff;
+}
+
+.ca-menu {
+	margin : 0px;
+}
+

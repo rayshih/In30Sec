@@ -3,6 +3,7 @@ var express = require('express');
 var consolidate = require('consolidate');
 var request = require('request');
 
+var port = 4000;
 var app = express();
 
 var API_KEY = 'i8xow0ntgqyz';
@@ -27,7 +28,7 @@ app.get('/login', function(req, res){
   '&client_id=' + API_KEY +
   '&scope=r_fullprofile' +
   '&state=' + CSRF +
-  '&redirect_uri=http://localhost:4000/callback';
+  '&redirect_uri=http://localhost:' + port + '/callback';
 
   res.redirect( url );
 });
@@ -39,7 +40,7 @@ app.get('/callback', function(req, res){
   var url = 'https://www.linkedin.com/uas/oauth2/accessToken' +
   '?grant_type=authorization_code' +
   '&code=' + authorization_token +
-  '&redirect_uri=http://localhost:4000/callback' +
+  '&redirect_uri=http://localhost:' + port + '/callback' +
   '&client_id=' + API_KEY +
   '&client_secret=' + SECRET_KEY;
 
@@ -53,5 +54,5 @@ app.get('/profile', function (req, res){
   res.render( 'profile', { access_token : req.session.access_token });
 });
 
-app.listen(4000);
-console.log('Listening on port 4000');
+app.listen(port);
+console.log('Listening on port ' + port);
