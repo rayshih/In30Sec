@@ -3,8 +3,8 @@
 }
 
 body {
+	font-family: 'Lato', sans-serif;
 	padding : 0;
-	font-family: Monospace;
 	background-color: #f0f0f0;
 	background-image: url('/images/bg.jpg');
 	margin: 0px;
@@ -107,3 +107,32 @@ body {
 	margin : 0px;
 }
 
+#widget-timeline {
+	padding : 20px;
+}
+
+#widget-headline {
+	font-size : 80px;
+	text-align : center;
+	line-height : 100px;
+}
+
+#widget-namecard {
+	padding : 20px;
+}
+
+#CountDown{
+	position: absolute;
+	top:0;
+	right:0;
+	background: #fff;
+	font-size: 16pt;
+	color : black;
+}
+
+#Logo{
+	position: absolute;
+	opacity: 0.9;
+	top: 0;
+	background: #fff;
+}

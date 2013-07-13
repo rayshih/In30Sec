@@ -8,18 +8,17 @@ View.Skills = function ( $el, widget ){
 View.Skills.prototype = new View.Base();
 
 View.Skills.prototype.run = function(){
-  var self = this;
-  var BarChartWidth = 800, BarChartHeight = 400;
 
-  var camera, scene, renderer;
+  var BarChartWidth = this.widget.rect.w, BarChartHeight = this.widget.rect.h;
+
+  var camera, scene, renderer, controls;
 
   //BarChart
   var CUBE_LENGTH = 50, CUBE_HEIGHT = 10, CUBE_DEPTH = 50, CUBE_SPACE = 3;
   var cubes;
   var CubeTopVertices = [0,1,4,5];
 
-  init();
-  animate();
+  var skills = this.widget.data.skills;
 
   function init() {
 
@@ -31,47 +30,122 @@ View.Skills.prototype.run = function(){
 
     // cubes
     cubes = new THREE.Object3D();
-    var geometry;
-    var material = new THREE.MeshPhongMaterial( { color: 0x77ffff, transparent: true, opacity: 0.9 } );
 
-    for ( var i = 0; i < 10; i ++ ) {
-      geometry = new THREE.CubeGeometry( CUBE_LENGTH, CUBE_HEIGHT, CUBE_DEPTH );
-      var cube = new THREE.Mesh( geometry, material );
-
-      cube.position.x = ( i % 10 ) * (CUBE_LENGTH + CUBE_SPACE) - (CUBE_LENGTH + CUBE_SPACE / 2) * 5;
-
-      cube.geometry.verticesNeedUpdate = true;
-
-      cubes.add( cube );
-      scene.add( cubes );
+    for ( var i = 0; i < skills.length && i < 5; i ++ ) {
+      create3DBarChart(i);
     }
 
-    // Lights
-    var ambientLight = new THREE.AmbientLight( 0x3f3f3f );
-    scene.add( ambientLight );
+    cubes.rotation.y = -Math.PI/2;
+    scene.add( cubes );
 
-    var pointLight = new THREE.PointLight( 0xffffff, 1, 5000 );
-    scene.add( pointLight );
+    // Lights
+    //var ambientLight = new THREE.AmbientLight( 0x3f3f3f );
+    //scene.add( ambientLight );
+
+    var pointLight = new THREE.PointLight( 0xffffff, 1.5, 5000 );
+    pointLight.position = camera.position;
+    scene.add( pointLight );    
+
+    var container = document.getElementById( 'widget-Skills' );
+
+    controls = new THREE.OrbitControls( camera, container );
+    controls.addEventListener( 'change', render );              
 
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setSize( BarChartWidth, BarChartHeight );
-    self.$el.append( renderer.domElement );
+    container.appendChild( renderer.domElement );
 
     window.addEventListener( 'resize', onWindowResize, false );
-    startBarChartAnimation();
+    container.addEventListener('mousedown', onMouseDown, false);
+
+  }
+
+  function create3DBarChart(i){
+    var geometry;       
+    var material = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture('/images/bar.jpg'), transparent: true, opacity: 0.9 } );
+
+    geometry = new THREE.CubeGeometry( CUBE_LENGTH, CUBE_HEIGHT, CUBE_DEPTH );
+    var cube = new THREE.Mesh( geometry, material );
+
+    cube.position.x = ( i % skills.length ) * (CUBE_LENGTH + CUBE_SPACE) - (CUBE_LENGTH + CUBE_SPACE / 2) * skills.length/2;
+    cube.skillname = skills[i].name;
+    cube.ability = skills[i].ability;
+
+    cube.geometry.verticesNeedUpdate = true;
+    var textMesh = create3DText( cube.skillname );
+    textMesh.position.set(0,0,-30);
+    textMesh.rotation.set(-Math.PI/2,0,Math.PI/2);
+    cube.add( textMesh );
+
+    cubes.add( cube );
+
+    geometry = new THREE.CubeGeometry( CUBE_LENGTH, CUBE_HEIGHT, CUBE_DEPTH );
+    material = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture('/images/bar.jpg'), transparent: true, color: 0xf37756, opacity: 0.9 } );       
+    var cube2 = new THREE.Mesh( geometry, material );
+    cube2.position.x = ( i % skills.length ) * (CUBE_LENGTH + CUBE_SPACE) - (CUBE_LENGTH + CUBE_SPACE / 2) * skills.length/2;
+    cube2.position.z = 53;
+    cube2.skillname = skills[i].name;
+    cube2.ability = skills[i].ability*Math.random();
+
+    cube2.geometry.verticesNeedUpdate = true;
+
+    cubes.add( cube2 );                                 
+
   }
 
   function startBarChartAnimation(){
     // Tween
     for( var i = 0; i < cubes.children.length; i++ ){
-      for(var number in CubeTopVertices){
-        new TWEEN.Tween( cubes.children[i].geometry.vertices[CubeTopVertices[number]] )
-          .to({y: 10*i+20}, 3000)
-          .easing( TWEEN.Easing.Bounce.Out)
-          .delay(i*50)
-          .start();
+      for(var number in CubeTopVertices){     
+        if( number != "remove"){                    
+          new TWEEN.Tween( cubes.children[i].geometry.vertices[CubeTopVertices[number]] )
+            .to({y: 50*cubes.children[i].ability+20}, 3000)
+            .easing( TWEEN.Easing.Bounce.Out)
+            .delay(i*50)
+            .start();
+        }
       }
     }
+  }
+
+  function create3DText( text ){
+
+    var textGeo = new THREE.TextGeometry( text, {
+
+      size: 30,
+        height: 2,
+        curveSegments: 5,
+
+        font: "helvetiker",
+        weight: "bold",
+        style: "normal",
+
+        bevelThickness: 2,
+        bevelSize: 1,
+        bevelEnabled: true
+
+    });
+
+    var textMat = new THREE.MeshLambertMaterial({color: 0xdddddd, shininess: 60, specular: 0x000000, transparent: true});
+    textMeshPoint = new THREE.Mesh( textGeo, textMat );
+    return textMeshPoint;
+  }           
+
+  function onMouseDown( event ){
+    startBarChartAnimation();
+    this.addEventListener('mousemove', onMouseMove, false);
+  }
+
+  function onMouseMove( event ){          
+
+    // this.style.top = event.clientY-BarChartHeight/2+"px";
+    // this.style.left = event.clientX-BarChartWidth/2+"px";
+    this.addEventListener('mouseup', onMouseUp, false);
+  }
+
+  function onMouseUp( event ){
+    this.removeEventListener('mousemove', onMouseMove, false);
+    this.removeEventListener('mouseup', onMouseUp, false);
   }
 
   function onWindowResize() {
@@ -89,7 +163,7 @@ View.Skills.prototype.run = function(){
 
     render();
     TWEEN.update();
-
+    controls.update();
   }
 
   function render() {
@@ -102,4 +176,8 @@ View.Skills.prototype.run = function(){
 
     renderer.render( scene, camera );
   }
+
+
+  init();
+  animate();
 };
