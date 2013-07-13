@@ -1,22 +1,45 @@
 var ToolBarController = function ( $el ){
   this.setDOM($el);
-  this.widgets = [];
+
+  this.setupDroppable();
 };
 
 ToolBarController.prototype = new BaseController();
+
+ToolBarController.prototype.setupDroppable = function (){
+  var self = this;
+  this.$el.droppable({
+    accept : ".widget",
+    tolerance : "pointer",
+    drop: function( event, ui ) {
+      var $widget = ui.draggable;
+      var widgetName = $widget.attr('id').split('-')[1];
+      self.removeWidgetByName(widgetName);
+    }
+  });
+};
+
+ToolBarController.prototype.removeWidgetByName = function(widgetName){
+  console.log('test');
+  var widget = WidgetCollection.findWidgetByName(widgetName);
+  widget.remove();
+  refreshView();
+};
 
 ToolBarController.prototype.render = function(){
   var $el = this.$el;
   $el.html('');
 
-  this.widgets.forEach(function(widget){
-    render('toolbar_button', widget, function(view){
-      $el.append(view);
+  WidgetCollection.widgets.forEach(function(widget){
+    if(widget.added) return;
+
+    render('toolbar_button', widget, function($view){
+      $view.draggable({
+        revert: "invalid",
+        helper: "clone",
+      });
+
+      $el.append($view);
     });
   });
-};
-
-ToolBarController.prototype.setWidgets = function(widgets){
-  this.widgets = widgets;
-  this.render();
 };

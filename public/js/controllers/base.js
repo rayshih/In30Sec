@@ -11,3 +11,5 @@ BaseController.prototype.show = function (){
 BaseController.prototype.hide = function (){
   this.$el.hide();
 };
+
+BaseController.prototype.render = function(){};

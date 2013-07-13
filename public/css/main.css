@@ -38,6 +38,11 @@ body {
 	vertical-align : middle;
 }
 
+#toolbar {
+	left : 0;
+	right : 0;
+}
+
 #toolbar-right {
 	right : 0;
 }

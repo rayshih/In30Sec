@@ -1,14 +1,21 @@
 $(function (){
-  var rect = new Rect(3, 4, 5, 6);
+  var rect = new Rect(200, 200, 300, 200);
   var headline = new HeadLine(rect, {hello: 'world'});
 
-  var widgets = [headline];
+  window.WidgetCollection = new WidgetCollection();
+  WidgetCollection.addWidget(headline);
 
   var toolbarController = new ToolBarController($('#toolbar'));
   var editorController = new EditorController($('#edit-area'));
   var playController = new PlayController($('#display'));
 
-  toolbarController.setWidgets(widgets);
+  window.refreshView = function (){
+    toolbarController.render();
+    editorController.render();
+    playController.render();
+  }
+
+  refreshView();
 
   var enableEditMode = function ( enable ){
     if(enable){
@@ -18,6 +25,7 @@ $(function (){
       editorController.hide();
       playController.show();
     }
+    refreshView();
   };
 
   var playBtn = $('#play-btn');
