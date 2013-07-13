@@ -2,7 +2,7 @@ var Base = function (){};
 
 Base.prototype.init = function ( title, rect, data ){
   this.title = title;
-  this.rect = rect;
+  this.rect = rect.clone();
   this.data = data;
   this.added = false;
 };
@@ -22,8 +22,8 @@ Base.prototype.setOffset = function(offset){
 
 Base.prototype.getOffset = function(){
   return {
-    top : this.rect.y,
-    left : this.rect.x
+    left : this.rect.x,
+    top : this.rect.y
   }
 }
 

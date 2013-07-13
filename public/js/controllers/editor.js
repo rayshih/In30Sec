@@ -48,12 +48,18 @@ EditorController.prototype.render = function(){
 
     var template = 'widget_' + title.toLowerCase();
     render(template, widget, function($view){
+
+      $view.draggable({
+        drag: function ( event, ui ){
+          widget.setOffset(ui.position);
+        }
+      });
+
       var rect = widget.rect;
       $view.height(rect.h);
       $view.width(rect.w);
       $view.offset(widget.getOffset());
-
-      $view.draggable();
+      $view.css({'position' : 'absolute'});
 
       var WidgetVC = View[ title ];
       self.viewControllers[ title ] = new WidgetVC($view, widget);

@@ -1,4 +1,4 @@
-View.HeadLine = function ( $el, widget ){
+View.TimeLine = function ( $el, widget ){
   this.$el = $el;
   this.widget = widget;
 }

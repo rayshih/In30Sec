@@ -27,6 +27,7 @@ PlayController.prototype.render = function(){
       $view.offset(widget.getOffset());
 
       var WidgetVC = View[ title ];
+
       self.viewControllers[ title ] = new WidgetVC($view, widget);
 
       $el.append($view);

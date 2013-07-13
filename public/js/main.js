@@ -1,11 +1,11 @@
 $(function (){
 
   // TODO load data
-  var rect = new Rect(200, 200, 300, 200);
-  var headline = new HeadLine(rect, {hello: 'world'});
+  var rect = new Rect(0, 0, 300, 200);
 
   window.WidgetCollection = new WidgetCollection();
-  WidgetCollection.addWidget(headline);
+  WidgetCollection.addWidget(new HeadLine(rect, {hello: 'world'}));
+  WidgetCollection.addWidget(new TimeLine(rect, {hello: 'world'}));
 
   // Setup Controllers
 
