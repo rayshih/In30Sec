@@ -35,16 +35,22 @@ EditorController.prototype.addWidgetByName = function(widgetName, center){
 
 EditorController.prototype.render = function(){
   var $el = this.$el;
-  $el.html('');
+  // $el.html('');
 
   var self = this;
   WidgetCollection.widgets.forEach(function(widget){
     var title = widget.title;
 
     if(!widget.added){
+      var vc = self.viewControllers[ title ];
+
+      if( vc ) vc.remove();
+
       delete self.viewControllers[ title ];
       return;
     }
+
+    if( self.viewControllers[ title ] ) return;
 
     var template = 'widget_' + title.toLowerCase();
     render(template, widget, function($view){

@@ -6,6 +6,7 @@ $(function (){
   window.WidgetCollection = new WidgetCollection();
   WidgetCollection.addWidget(new HeadLine(rect, {hello: 'world'}));
   WidgetCollection.addWidget(new TimeLine(rect, {hello: 'world'}));
+  WidgetCollection.addWidget(new Skills(new Rect(0, 0, 800, 400), {}));
 
   // Setup Controllers
 
